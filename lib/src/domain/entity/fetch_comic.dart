@@ -27,12 +27,12 @@ class FetchComic {
     };
   }
 
-  factory FetchComic.fromMap(Map<String, dynamic> map) {
+  factory FetchComic.fromMap(Map<String, dynamic>? map) {
     return FetchComic(
-      comics:  ComicDto.fromList(map['data']['results']),
-      total: map['total'] != null ? map['total'] as int : null,
-      offset: map['offset'] != null ? map['offset'] as int : null,
-      limit: map['limit'] != null ? map['limit'] as int : null,
+      comics:  ComicDto.fromList(map?['data']['results'] ?? []),
+      total: map?['total'] != null ? map!['total'] as int : null,
+      offset: map?['offset'] != null ? map!['offset'] as int : null,
+      limit: map?['limit'] != null ? map!['limit'] as int : null,
     );
   }
 

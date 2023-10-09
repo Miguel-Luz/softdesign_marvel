@@ -72,14 +72,19 @@ class _HomeScreenState extends State<HomeScreen> {
               });
         }),
         bottomNavigationBar: Observer(
-          builder: (context) => Visibility(
-            visible: _homeStore.isLoading,
-            child: const LinearProgressIndicator(
-              backgroundColor: Colors.black,
-              valueColor: AlwaysStoppedAnimation(Colors.red),
-              minHeight: 10,
-            ),
-          ),
+          builder: (context) => _homeStore.isLoading
+              ? const LinearProgressIndicator(
+                  backgroundColor: Colors.black,
+                  valueColor: AlwaysStoppedAnimation(Colors.red),
+                  minHeight: 12,
+                )
+              : Padding(
+                  padding:const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    'showing ${_homeStore.characters.length} of ${_homeStore.fetchCharacter.total}',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
         ),
       ),
     );

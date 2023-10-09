@@ -27,12 +27,12 @@ class FetchCharacter {
     charactres.addAll(data.charactres);
   }
 
-  factory FetchCharacter.fromMap(Map<String, dynamic> map) {
+  factory FetchCharacter.fromMap(Map<String, dynamic>? map) {
     return FetchCharacter(
-      charactres: CharacterDto.fromList(map['data']['results']),
-      total: map['data']['total'] as int,
-      offset: map['data']['offset'] as int,
-      limit: map['data']['limit'] as int,
+      charactres: CharacterDto.fromList(map?['data']['results'] ?? []),
+      total: map?['data']['total'] as int?,
+      offset: map?['data']['offset'] as int?,
+      limit: map?['data']['limit'] as int?,
     );
   }
 

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:softdesign_marvel/src/domain/entity/character.dart';
+import 'package:softdesign_marvel/src/presenter/home/components/custom_shimmer.dart';
 
 class CharactersCard extends StatelessWidget {
   final Character character;
@@ -20,29 +22,29 @@ class CharactersCard extends StatelessWidget {
           children: [
             LimitedBox(
               maxHeight: 130,
-              child: Image.network(
-                character.thumbnail,
-                fit: BoxFit.fitHeight,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  );
-                },
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return const SizedBox.shrink();
-                },
+              child: CachedNetworkImage(
+                imageUrl: character.thumbnail!,
+                placeholder: (context, url) => const CustomShimmer(
+                  height: 150,
+                  width: double.infinity,
+                  baseColor: Colors.red,
+                  highlightColor: Colors.black,
+                ),
+                errorWidget: (_, __, ___) => SizedBox(
+                  height: 150,
+                  child: Image.asset(
+                    'assets/images/logo_marvel.png',
+                    width: 50,
+                  ),
+                ),
               ),
             ),
-            Text(
-              character.name,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                character.name!,
+                textAlign: TextAlign.justify,
+              ),
             )
           ],
         ),

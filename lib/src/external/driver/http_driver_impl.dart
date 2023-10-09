@@ -25,7 +25,7 @@ class HttpDriverImpl extends HttpDriver {
     try {
       buildCredentialService.buildHash();
 
-      final response = await httpClient.request(
+      final response = await httpClient.request<Map<String, dynamic>>(
         requestData.url,
         queryParameters: {
           'ts': buildCredentialService.timestamp,
@@ -40,8 +40,6 @@ class HttpDriverImpl extends HttpDriver {
       );
       return response.data;
     } on DioException catch (error) {
-      print("|||||||||||||||||");
-      print(error.response!.realUri.toString());
       throw HttpFailure(error.response?.data);
     } catch (e) {
       throw Exception();

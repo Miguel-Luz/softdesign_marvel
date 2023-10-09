@@ -11,7 +11,8 @@ class CharacterRepositoryImpl implements CharacterRepository {
   @override
   Future<CharactersResult> getCharacters(int offset) async {
     try {
-      return CharactersResult.success(await _dataSource.get(offset: offset));
+      final result = await _dataSource.get(offset: offset);
+      return CharactersResult.success(result);
     } on HttpFailure catch (e) {
       return CharactersResult.error(_handlHttpFailure(e.message));
     } catch (e) {

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
 import 'package:softdesign_marvel/src/domain/entity/character.dart';
 import 'package:softdesign_marvel/src/domain/entity/comics.dart';
@@ -31,6 +33,9 @@ abstract class HomeStoreBase with Store {
   @observable
   bool isLoading = false;
 
+  @observable
+  bool isLoadingComics = false;
+
   int? offset;
 
   @action
@@ -44,7 +49,7 @@ abstract class HomeStoreBase with Store {
         fetchCharacter = data;
         characters.addAll(data.charactres);
       },
-      error: (data) => print(data),
+      error: (data) => _toast(data),
     );
 
     isLoading = false;
@@ -52,6 +57,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   getComics(String idCharacter) async {
+    isLoadingComics = true;
     final result = await _comicRepository.getComics(idCharacter);
     result.when(
       success: (data) {
@@ -59,7 +65,18 @@ abstract class HomeStoreBase with Store {
 
         comics = data.comics;
       },
-      error: (data) => print(data),
+      error: (data) => _toast(data),
     );
+    isLoadingComics = false;
   }
+
+  _toast(String data) => Fluttertoast.showToast(
+        msg: data,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 14,
+      );
 }

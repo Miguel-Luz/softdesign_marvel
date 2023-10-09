@@ -4,17 +4,18 @@ import 'package:softdesign_marvel/src/service_locator.dart';
 
 void main() {
   setup();
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Marvel Comics',
       theme: _buildTheme(),
+      debugShowCheckedModeBanner: false,
       routerDelegate: routes.routerDelegate,
       routeInformationParser: routes.routeInformationParser,
       routeInformationProvider: routes.routeInformationProvider,
@@ -29,6 +30,8 @@ ThemeData _buildTheme() {
     appBarTheme: const AppBarTheme(
       foregroundColor: Colors.white,
       backgroundColor: Colors.black,
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 16),
     ),
   );
 }
